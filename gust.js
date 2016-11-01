@@ -42,6 +42,6 @@ var rootDir = cliArgs[0] || process.env.GUST_ROOT;
 var fileDescriber = new require(__dirname + "/lib/file_describer.js")();
 var fileDescriptions = fileDescriber.findAndDescribeJavaFiles(rootDir);
 console.log(("Found " + fileDescriptions.length + " files").important);
-
+var commentCreator = new require(__dirname + "/lib/comment_creator.js")();
+commentCreator.addHeadersFileDescriptions(fileDescriptions);
 //console.log(d);
-
