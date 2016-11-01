@@ -1,0 +1,16 @@
+{
+  "name": "gust",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Grant James <beplaya@gmail.com> (https://github.com/beplaya)",
+  "license": "",
+  "dependencies": {
+    "camelcase": "^3.0.0",
+    "colors": "^1.1.2",
+    "prompt": "^1.0.0"
+  }
+}
