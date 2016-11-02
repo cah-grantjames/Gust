@@ -1,0 +1,21 @@
+<div>
+    <h1>{{className}}</h1>
+    <h3>{{type}}</h3>
+    <div>{{fileName}}</div>
+    <div>{{type}}</div>
+    <div>{{package}}</div>
+    <div>
+        <div>{{associatedClassesTitle}}</div>
+        <ul>
+            {{list,associatedClasses,*,basic_list_item,I}}
+        </ul>
+        <div>Declared BR</div>
+        <ul>
+            {{list,broadcastReceiverInfo.declared,name,basic_list_item,I}}
+        </ul>
+        <div>Used BR</div>
+        <ul>
+            {{list,broadcastReceiverInfo.used,name,basic_list_item,I}}
+        </ul>
+    </div>
+</div>
