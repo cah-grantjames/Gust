@@ -44,7 +44,9 @@ var fileDescriptions = fileDescriber.findAndDescribeJavaFiles(rootDir);
 console.log(("Found " + fileDescriptions.length + " files").important);
 var commentCreator = new require(__dirname + "/lib/comment_creator.js")();
 commentCreator.addHeadersFileDescriptions(fileDescriptions);
-for(var i = 0; i < fileDescriptions.length; i++) {
+commentCreator.addTokenToAllFiles(fileDescriptions);
+commentCreator.writeHeadersToAllFiles(fileDescriptions);
+//for(var i = 0; i < fileDescriptions.length; i++) {
     //if(fileDescriptions[i].className == "BaseVm" || fileDescriptions[i].className == "AccessMedicationVm")
         //console.log(JSON.stringify(fileDescriptions[i], 0, 4));
-}
+//}
