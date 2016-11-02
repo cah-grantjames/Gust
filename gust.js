@@ -31,7 +31,10 @@ colors.setTheme({
       arg: 'white'
     });
 
+
 var cliArgs = process.argv.slice(2);
+var addHeadersToJavaFiles = false;
+var outputFiles = {dir: "out", json:"out.gust.json", text:"out.gust.txt"};
 if(!cliArgs[0]){
     console.log("\n--- ---\n".error,
     "Not root dir specified.  Using environment variable: 'GUST_ROOT'".error,
@@ -42,11 +45,27 @@ var rootDir = cliArgs[0] || process.env.GUST_ROOT;
 var fileDescriber = new require(__dirname + "/lib/file_describer.js")();
 var fileDescriptions = fileDescriber.findAndDescribeJavaFiles(rootDir);
 console.log(("Found " + fileDescriptions.length + " files").important);
+
+
+var fs = require('fs');
+if(!fs.existsSync(outputFiles.dir)) {
+    fs.mkdirSync(outputFiles.dir);
+}
+fs.writeFileSync(outputFiles.dir + "/" + outputFiles.json, JSON.stringify(fileDescriptions, 0, 4));
+
 var commentCreator = new require(__dirname + "/lib/comment_creator.js")();
 commentCreator.addHeadersFileDescriptions(fileDescriptions);
-commentCreator.addTokenToAllFiles(fileDescriptions);
-commentCreator.writeHeadersToAllFiles(fileDescriptions);
-//for(var i = 0; i < fileDescriptions.length; i++) {
-    //if(fileDescriptions[i].className == "BaseVm" || fileDescriptions[i].className == "AccessMedicationVm")
-        //console.log(JSON.stringify(fileDescriptions[i], 0, 4));
-//}
+if(addHeadersToJavaFiles) {
+    commentCreator.addTokenToAllFiles(fileDescriptions);
+    commentCreator.writeHeadersToAllFiles(fileDescriptions);
+}
+var text = "";
+for(var i = 0; i < fileDescriptions.length; i++) {
+    text += "-------------------------------------\n";
+    text += fileDescriptions[i].filePath.replace(rootDir, "") + "\n";
+    text += fileDescriptions[i].package + "\n";
+    text += fileDescriptions[i].header + "\n";
+    text += "-------------------------------------\n";
+}
+fs.writeFileSync(outputFiles.dir + "/" + outputFiles.text, text);
+console.log(("Saved output to: \n\t" + outputFiles.dir + "/" + outputFiles.json + "\n\t" + outputFiles.dir + "/" + outputFiles.text).important);
