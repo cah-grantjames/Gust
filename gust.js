@@ -11,24 +11,12 @@ Array.prototype.getUnique = function(){
 }
 var colors = require('colors');
 colors.setTheme({
-      silly: 'rainbow',
-      input: 'grey',
-      verbose: 'cyan',
-      prompt: 'grey',
       good: 'green',
-      staged: 'green',
-      data: 'grey',
-      help: 'cyan',
       warn: 'yellow',
       debug: 'blue',
       important: 'blue',
-      change: 'red',
-      RED: 'red',
       error: 'red',
-      name: 'red',
-      logo: 'green',
-      title: 'green',
-      arg: 'white'
+      verbose: 'white'
     });
 
 
@@ -37,15 +25,16 @@ var addHeadersToJavaFiles = false;
 var outputFiles = {dir: "out", json:"out.gust.json", text:"out.gust.txt"};
 if(!cliArgs[0]){
     console.log("\n--- ---\n".error,
-    "Not root dir specified.  Using environment variable: 'GUST_ROOT'".error,
+    "No root directory specified!  Using environment variable: 'GUST_ROOT'".error,
     ("\n[" + process.env.GUST_ROOT + "]").warn,
     "\n--- ---\n".error);
 }
 var rootDir = cliArgs[0] || process.env.GUST_ROOT;
+console.log(("Using root directory: " + rootDir).verbose);
 var fileDescriber = new require(__dirname + "/lib/file_describer.js")();
 var fileDescriptions = fileDescriber.findAndDescribeJavaFiles(rootDir);
-console.log(("Found " + fileDescriptions.length + " files").important);
-
+console.log(("\tFound " + fileDescriptions.length + " files").important);
+console.log("Parsing completed.  Saving files...".verbose);
 
 var fs = require('fs');
 if(!fs.existsSync(outputFiles.dir)) {
@@ -68,4 +57,4 @@ for(var i = 0; i < fileDescriptions.length; i++) {
     text += "-------------------------------------\n";
 }
 fs.writeFileSync(outputFiles.dir + "/" + outputFiles.text, text);
-console.log(("Saved output to: \n\t" + outputFiles.dir + "/" + outputFiles.json + "\n\t" + outputFiles.dir + "/" + outputFiles.text).important);
+console.log(("\tSaved output to: \n\t\t" + outputFiles.dir + "/" + outputFiles.json + "\n\t\t" + outputFiles.dir + "/" + outputFiles.text).important);
