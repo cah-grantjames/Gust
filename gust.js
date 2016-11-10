@@ -9,6 +9,15 @@ Array.prototype.getUnique = function(){
    }
    return a;
 }
+Array.prototype.clean = function() {
+  for (var i = 0; i < this.length; i++) {
+    if (this[i].trim() == "") {
+      this.splice(i, 1);
+      i--;
+    }
+  }
+  return this;
+};
 var colors = require('colors');
 colors.setTheme({
       good: 'green',
@@ -22,7 +31,7 @@ colors.setTheme({
 
 var cliArgs = process.argv.slice(2);
 var addHeadersToJavaFiles = false;
-var outputFiles = {dir: "out", json:"out.gust.json", text:"out.gust.txt"};
+var outputFiles = {dir: "out", json:"out.gust.json", text:"out.gust.txt", html: "out.gust.html"};
 if(!cliArgs[0]){
     console.log("\n--- ---\n".error,
     "No root directory specified!  Using environment variable: 'GUST_ROOT'".error,
@@ -57,4 +66,11 @@ for(var i = 0; i < fileDescriptions.length; i++) {
     text += "-------------------------------------\n";
 }
 fs.writeFileSync(outputFiles.dir + "/" + outputFiles.text, text);
-console.log(("\tSaved output to: \n\t\t" + outputFiles.dir + "/" + outputFiles.json + "\n\t\t" + outputFiles.dir + "/" + outputFiles.text).important);
+
+var HtmlCreator = require(__dirname + "/lib/html_creator.js");
+var htmlCreator = new HtmlCreator();
+htmlCreator.createHtmlDocs(outputFiles.dir, outputFiles.html, fileDescriptions);
+console.log(("\tSaved output to: \n\t\t" + outputFiles.dir + "/" + outputFiles.json
++ "\n\t\t" + outputFiles.dir + "/" + outputFiles.text
++ "\n\t\t" + outputFiles.dir + "/" + outputFiles.html
+).important);

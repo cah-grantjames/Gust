@@ -1,0 +1,32 @@
+<div>
+    <h1 id="{{package}}.{{className}}">{{className}}</h1>
+    <h3>{{type}}</h3>
+    <div>{{fileName}}</div>
+    <div>{{package}}</div>
+    <div>
+        <div>{{associatedClassesTitle}}</div>
+        <ul>
+            {{list,associatedClasses,*,anchor_list_item,I,anchor}}
+        </ul>
+        <!-- -->
+        <h3>Dao Associations</h3>
+        <h5>DAO: </h5>
+        <ul>{{list,daoAssociations.daos,*,basic_list_item,I}}</ul>
+        <h5>DTO: </h5>
+        <ul>{{list,daoAssociations.dtos,*,basic_list_item,I}}</ul>
+        <h5>DOMAIN: </h5>
+        <ul>{{list,daoAssociations.domains,*,basic_list_item,I}}</ul>
+        <!-- -->
+
+        <h3> Broadcast Receivers</h3>
+
+        <h4>Declared</h4>
+        <ul>
+            {{list,broadcastReceiverInfo.declared,name,basic_list_item,I}}
+        </ul>
+        <h4>Used</h4>
+        <ul>
+            {{list,broadcastReceiverInfo.used,name,basic_list_item,I}}
+        </ul>
+    </div>
+</div>
